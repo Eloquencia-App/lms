@@ -1,0 +1,7 @@
+RewriteEngine on
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+
+# disable directory browsing
+Options All -Indexes
+
+ErrorDocument 404 /404.php
