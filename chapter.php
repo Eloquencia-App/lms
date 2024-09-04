@@ -1,10 +1,12 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include 'config.php';
+
+include 'utils.php';
+$utils = new Utils();
+if (!$utils->checkCookie('token')) {
+    header('Location: ./login?error=disconnected');
+}
 
 if(isset($_GET['id'])) {
     $req = $db->prepare('SELECT * FROM lessons_chapters WHERE ID = :id');
@@ -35,6 +37,7 @@ if(isset($_GET['id'])) {
     <link rel="stylesheet" href="css/eloquencia.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
     <script src="js/bootstrap.bundle.js"></script>
+    <script src="js/eloquencia.js"></script>
 </head>
 <body>
 <div id="sidebar" class="sidebar d-flex flex-column">

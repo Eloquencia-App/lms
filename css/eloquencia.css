@@ -63,12 +63,19 @@
     color: #000;
 }
 
+.news {
+    height: 400px;
+}
+
 @media (max-width: 768px) {
     .sidebar {
         max-width: 200px;
     }
     .content .row {
         flex-direction: column;
+    }
+    .news {
+        max-height: 300px;
     }
 }
 
