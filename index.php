@@ -65,6 +65,19 @@ include 'config.php';
                 <h6 class="display-6">Bienvenue Nom Prénom</h6>
             </div>
         </div>
+        <?php
+        if (isset($_GET['error'])) {
+            if ($_GET['error'] == 'lessonundefined') {
+                echo '<div class="alert alert-danger" role="alert">La leçon demandée n\'existe pas.</div>';
+            }
+        }
+        ?>
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">Bienvenue sur Eloquéncia</h4>
+            <p>Vous êtes actuellement sur la page d'accueil de la plateforme Eloquéncia. Vous pouvez naviguer entre les différentes leçons en cliquant sur les chapitres dans la barre latérale.</p>
+            <hr>
+            <p class="mb-0">Si vous avez des questions, n'hésitez pas à contacter le support (<a href="mailto:dev@eloquencia.org">dev@eloquencia.org</a>)</p>
+        </div>
         <div class="row">
             <div class="col-6">
                 <div class="card">
