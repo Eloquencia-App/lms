@@ -42,7 +42,7 @@ include 'config.php';
     $chapters = $req->fetchAll();
     foreach ($chapters as $chapter) {
         echo '<nav class="nav flex-column">';
-        echo '<a href="#" class="nav-link"><i class="fas fa-book"></i><span>' . $chapter['name'] . '</span></a>';
+        echo '<a href="chapter?id='.$chapter['ID'].'" class="nav-link"><i class="fas fa-book"></i><span>' . $chapter['name'] . '</span></a>';
         echo '</nav>';
     }
     ?>
