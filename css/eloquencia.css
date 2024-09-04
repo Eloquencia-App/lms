@@ -1,0 +1,92 @@
+/* css/eloquencia.css */
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    background-color: #9C7D33;
+    transition: width 0.3s;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+    text-align: center;
+}
+
+.sidebar .nav-link {
+    color: white;
+}
+
+.sidebar.collapsed .nav-link span {
+    display: none;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
+
+.sidebar .logo {
+    padding: 15px;
+}
+
+.sidebar.collapsed .logo h5 {
+    display: none;
+}
+
+.content {
+    margin-left: 250px;
+    transition: margin-left 0.3s;
+}
+
+.collapsed + .content {
+    margin-left: 80px;
+}
+
+.btn-primary {
+    background-color: #e6dbb9;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 10px;
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+.btn-primary:hover {
+    background-color: #eae2c9;
+    color: #1a1d20;
+}
+.nav-link.active {
+    background-color: #eae2c9;
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        max-width: 200px;
+    }
+    .content .row {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        max-width: 150px;
+    }
+    .sidebar .d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+    .sidebar .d-flex a {
+        text-align: center;
+    }
+    .sidebar .d-flex a img {
+        margin-bottom: 10px;
+    }
+    .content .row {
+        flex-direction: column;
+    }
+}
