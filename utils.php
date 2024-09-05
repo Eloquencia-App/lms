@@ -48,5 +48,21 @@ class Utils
         }
     }
 
+    public function getNameFirstname($token): string
+    {
+        include 'config.php';
+        $req = $db->prepare('SELECT user_id FROM tokens WHERE token = :token');
+        $req->execute(array(
+            'token' => $token
+        ));
+        $req = $req->fetch();
+        $req2 = $db->prepare('SELECT name, firstname FROM members WHERE ID = :id');
+        $req2->execute(array(
+            'id' => $req['user_id']
+        ));
+        $req2 = $req2->fetch();
+        return $req2['name'] . ' ' . $req2['firstname'];
+    }
+
 
 }
