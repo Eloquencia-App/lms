@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include 'config.php';
 
 include 'utils.php';
@@ -7,9 +12,14 @@ if (!$utils->checkCookie('token')) {
     header('Location: ./login?error=disconnected');
 }
 
-$req = $db->prepare('SELECT * FROM users WHERE token = ?');
+$req = $db->prepare('SELECT user_id FROM tokens WHERE token = ?');
 $req->execute(array($_COOKIE['token']));
-$user = $req->fetch();
+$req = $req->fetch();
+$req2 = $db->prepare('SELECT * FROM members WHERE ID = ?');
+$req2->execute(array($req['user_id']));
+$user = $req2->fetch();
+$user['registrationDate'] = date('d/m/Y', strtotime($user['registrationDate']));
+$user['expirationDate'] = date('d/m/Y', strtotime($user['expirationDate']));
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +54,7 @@ $user = $req->fetch();
     </div>
     <hr>
     <nav class="nav flex-column">
-        <a href="#" class="nav-link"><i class="fas fa-house"></i><span>Accueil</span></a>
+        <a href="./" class="nav-link"><i class="fas fa-house"></i><span>Accueil</span></a>
     </nav>
     <hr>
     <?php
@@ -60,12 +70,12 @@ $user = $req->fetch();
     <hr>
     <div class="dropup mt-auto mb-3">
         <button type="button" class="btn dropdown-toggle w-100 text-start text-truncate show text-white" data-bs-toggle="dropdown" aria-expanded="false">
-            Nom Prénom
+            <?= $user['name'] . ' ' . $user['firstname'] ?>
         </button>
         <ul class="dropdown-menu" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -40px);" data-popper-placement="top-start">
             <!-- Dropdown menu links -->
             <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profil</a></li>
-            <li class="text-danger-emphasis"><a class="dropdown-item" href="#"><i class="fas fa-door-closed"></i> Déconnexion</a></li>
+            <li class="text-danger-emphasis"><a class="dropdown-item" href="logout"><i class="fas fa-door-closed"></i> Déconnexion</a></li>
         </ul>
     </div>
 </div>
@@ -83,9 +93,24 @@ $user = $req->fetch();
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                <p><strong>Nom :</strong> <?php echo $user['lastname']; ?></p>
+                                <p><strong>Nom :</strong> <?php echo $user['name']; ?></p>
                                 <p><strong>Prénom :</strong> <?php echo $user['firstname']; ?></p>
                                 <p><strong>Email :</strong> <?php echo $user['email']; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <h5 class="card-header">Mon adhésion</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Date d'adhésion :</strong> <?php echo $user['registrationDate']; ?></p>
+                                <p><strong>Fin de l'adhésion :</strong> <?php echo $user['expirationDate']; ?></p>
                             </div>
                         </div>
                     </div>

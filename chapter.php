@@ -66,12 +66,12 @@ if(isset($_GET['id'])) {
     <hr>
     <div class="dropup mt-auto mb-3">
         <button type="button" class="btn dropdown-toggle w-100 text-start text-truncate show text-white" data-bs-toggle="dropdown" aria-expanded="false">
-            Nom Prénom
+            <?php echo $utils->getNameFirstname($_COOKIE['token']); ?>
         </button>
         <ul class="dropdown-menu" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -40px);" data-popper-placement="top-start">
             <!-- Dropdown menu links -->
-            <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profil</a></li>
-            <li class="text-danger-emphasis"><a class="dropdown-item" href="#"><i class="fas fa-door-closed"></i> Déconnexion</a></li>
+            <li><a class="dropdown-item" href="profile"><i class="fas fa-user"></i> Profil</a></li>
+            <li class="text-danger-emphasis"><a class="dropdown-item" href="logout"><i class="fas fa-door-closed"></i> Déconnexion</a></li>
         </ul>
     </div>
 </div>
