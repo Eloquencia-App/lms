@@ -64,5 +64,46 @@ class Utils
         return $req2['name'] . ' ' . $req2['firstname'];
     }
 
+    public function getNextLesson($token): array
+    {
+        include 'config.php';
+        $req = $db->prepare('SELECT lessons_history FROM members WHERE ID = (SELECT user_id FROM tokens WHERE token = :token)');
+        $req->execute(array(
+            'token' => $token
+        ));
+        $req = $req->fetch();
+        $json = json_decode($req['lessons_history'], true);
+        $req2 = $db->prepare('SELECT ID, title, summary FROM lessons WHERE ID NOT IN (' . implode(',', array_keys($json)) . ') ORDER BY ID ASC LIMIT 1');
+        $req2->execute();
+        $res = $req2->fetch();
+        if ($res == null) {
+            return array('ID' => 0, 'title' => 'Félicitations !', 'summary' => 'Vous avez terminé toutes les leçons disponibles.');
+        } else {
+            return $res;
+        }
+    }
 
+    public function setLessonHistory($token, $lesson_id): void
+    {
+        include 'config.php';
+        $req = $db->prepare('SELECT lessons_history FROM members WHERE ID = (SELECT user_id FROM tokens WHERE token = :token)');
+        $req->execute(array(
+            'token' => $token
+        ));
+        $req = $req->fetch();
+        if ($req['lessons_history'] == null) {
+            $req['lessons_history'] = '{}';
+        }
+        $json = json_decode($req['lessons_history'], true);
+
+        if (!array_key_exists($lesson_id, $json)) {
+            $json[$lesson_id] = 1;
+        }
+
+        $req2 = $db->prepare('UPDATE members SET lessons_history = :lessons_history WHERE ID = (SELECT user_id FROM tokens WHERE token = :token)');
+        $req2->execute(array(
+            'lessons_history' => json_encode($json),
+            'token' => $token
+        ));
+    }
 }

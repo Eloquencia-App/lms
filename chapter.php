@@ -15,6 +15,10 @@ if(isset($_GET['id'])) {
 } else {
     header('Location: ./');
 }
+
+if (isset($_GET['read'])) {
+    $utils->setLessonHistory($_COOKIE['token'], htmlspecialchars($_GET['read']));
+}
 ?>
 
 <!DOCTYPE html>

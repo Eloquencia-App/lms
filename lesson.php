@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include 'config.php';
 
 include 'utils.php';
@@ -17,6 +19,10 @@ if(isset($_GET['id'])) {
     $chapter = $req->fetch();
 } else {
     header('Location: ./?error=lessonundefined');
+}
+
+if (isset($_GET['read'])) {
+    $utils->setLessonHistory($_COOKIE['token'], htmlspecialchars($_GET['read']));
 }
 ?>
 
@@ -92,6 +98,22 @@ if(isset($_GET['id'])) {
                     <h5 class="card-header">Introduction</h5>
                     <div class="card-body">
                         <p class="card-text"><?= $lesson['content']; ?></p>
+                    </div>
+                    <div class="card-footer text-end">
+                        <?php
+                        $req = $db->prepare('SELECT ID FROM lessons WHERE ID > :id LIMIT 1');
+                        $req->execute(array('id' => $lesson['ID']));
+                        $nextLesson = $req->fetch();
+                        if ($nextLesson) {
+                            ?>
+                            <a href="lesson?id=<?= $nextLesson['ID'] ?>&read=<?= $lesson['ID']?>" class="btn btn-primary">Suivant</a>
+                            <?php
+                        } else {
+                            ?>
+                            <a href="chapter?id=<?= $lesson['chapter'] ?>&read=<?= $lesson['ID']?>" class="btn btn-primary">Retour</a>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

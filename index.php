@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include 'config.php';
 
 include 'utils.php';
@@ -6,6 +10,9 @@ $utils = new Utils();
 if (!$utils->checkCookie('token')) {
     header('Location: ./login?error=disconnected');
 }
+
+$nextLesson = $utils->getNextLesson($_COOKIE['token']);
+
 ?>
 
 <!DOCTYPE html>
@@ -90,9 +97,15 @@ if (!$utils->checkCookie('token')) {
                 <div class="card" id="nextLesson">
                     <h5 class="card-header">Leçon suivante</h5>
                     <div class="card-body">
-                        <h5 class="card-title">Titre de la leçon suivante</h5>
-                        <p class="card-text">Résumé de la leçon suivante.</p>
-                        <a href="#" class="btn btn-primary">Consulter</a>
+                        <h5 class="card-title"><?= $nextLesson['title']; ?></h5>
+                        <p class="card-text"><?= $nextLesson['summary']; ?></p>
+                        <?php
+                        if ($nextLesson['ID'] != 0) {
+                        ?>
+                        <a href="lesson?id=<?= $nextLesson['ID']; ?>" class="btn btn-primary">Commencer</a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
