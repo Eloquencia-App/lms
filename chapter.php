@@ -44,7 +44,7 @@ if (isset($_GET['read'])) {
     <script src="js/eloquencia.js"></script>
 </head>
 <body>
-<div id="sidebar" class="sidebar d-flex flex-column">
+<div id="sidebar" class="sidebar d-flex flex-column <?php if (isset($_COOKIE['sidebar']) && $_COOKIE['sidebar'] == 'collapsed') { echo 'collapsed'; } ?>">
     <button id="toggleButton" class="btn btn-sm text-white">
         <i id="itoggleButton" class="fas fa-bars"></i>
     </button>

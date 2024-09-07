@@ -38,8 +38,8 @@ $nextLesson = $utils->getNextLesson($_COOKIE['token']);
     <script src="js/eloquencia.js"></script>
 </head>
 <body>
-<div id="sidebar" class="sidebar d-flex flex-column">
-    <button id="toggleButton" class="btn btn-sm text-white">
+<div id="sidebar" class="sidebar d-flex flex-column <?php if (isset($_COOKIE['sidebar']) && $_COOKIE['sidebar'] == 'collapsed') { echo 'collapsed'; } ?>">
+    <button id="toggleButton" class="btn btn-sm text-white" onclick="setNavCookie()">
         <i id="itoggleButton" class="fas fa-bars"></i>
     </button>
     <div class="logo d-flex align-items-center p-3">

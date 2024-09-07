@@ -45,7 +45,7 @@ $user['expirationDate'] = date('d/m/Y', strtotime($user['expirationDate']));
     <script src="js/eloquencia.js"></script>
 </head>
 <body>
-<div id="sidebar" class="sidebar d-flex flex-column">
+<div id="sidebar" class="sidebar d-flex flex-column <?php if (isset($_COOKIE['sidebar']) && $_COOKIE['sidebar'] == 'collapsed') { echo 'collapsed'; } ?>">
     <button id="toggleButton" class="btn btn-sm text-white">
         <i id="itoggleButton" class="fas fa-bars"></i>
     </button>
@@ -88,7 +88,7 @@ $user['expirationDate'] = date('d/m/Y', strtotime($user['expirationDate']));
         </div>
         <div class="row">
             <div class="col-6">
-                <div class="card">
+                <div class="card" id="profile">
                     <h5 class="card-header">Informations personnelles</h5>
                     <div class="card-body">
                         <div class="row">
@@ -104,7 +104,7 @@ $user['expirationDate'] = date('d/m/Y', strtotime($user['expirationDate']));
         </div>
         <div class="row">
             <div class="col-6">
-                <div class="card">
+                <div class="card" id="dates">
                     <h5 class="card-header">Mon adhésion</h5>
                     <div class="card-body">
                         <div class="row">
