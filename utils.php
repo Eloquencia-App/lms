@@ -72,8 +72,13 @@ class Utils
             'token' => $token
         ));
         $req = $req->fetch();
+        if ($req['lessons_history'] == null) {
+            $req['lessons_history'] = '{}';
+        }
         $json = json_decode($req['lessons_history'], true);
-        $req2 = $db->prepare('SELECT ID, title, summary FROM lessons WHERE ID NOT IN (' . implode(',', array_keys($json)) . ') ORDER BY ID ASC LIMIT 1');
+        $lessonIds = empty($json) ? '0' : implode(',', array_keys($json));
+
+        $req2 = $db->prepare('SELECT ID, title, summary FROM lessons WHERE ID NOT IN (' . $lessonIds . ') ORDER BY ID ASC LIMIT 1');
         $req2->execute();
         $res = $req2->fetch();
         if ($res == null) {
