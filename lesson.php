@@ -97,7 +97,7 @@ if (isset($_GET['read'])) {
                 <div class="card">
                     <h5 class="card-header">Introduction</h5>
                     <div class="card-body">
-                        <p class="card-text"><?= $lesson['content']; ?></p>
+                        <p class="card-text"><?= html_entity_decode($lesson['content']); ?></p>
                     </div>
                     <div class="card-footer text-end">
                         <?php
