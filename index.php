@@ -86,12 +86,17 @@ $nextLesson = $utils->getNextLesson($_COOKIE['token']);
             }
         }
         ?>
-        <div class="alert alert-info" role="alert">
-            <h4 class="alert-heading">Bienvenue sur Eloquéncia</h4>
-            <p>Vous êtes actuellement sur la page d'accueil de la plateforme Eloquéncia. Vous pouvez naviguer entre les différentes leçons en cliquant sur les chapitres dans la barre latérale.</p>
-            <hr>
-            <p class="mb-0">Si vous avez des questions, n'hésitez pas à contacter le support (<a href="mailto:dev@eloquencia.org">dev@eloquencia.org</a>)</p>
-        </div>
+        <?php
+        $announcement = $utils->getAnnouncement();
+        if ($announcement['state'] == 1) {
+            ?>
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading"><?= $announcement['value']->title; ?></h4>
+                <p><?= $announcement['value']->content; ?></p>
+            </div>
+            <?php
+        }
+        ?>
         <div class="row">
             <div class="col-6">
                 <div class="card" id="nextLesson">
@@ -101,9 +106,9 @@ $nextLesson = $utils->getNextLesson($_COOKIE['token']);
                         <p class="card-text"><?= $nextLesson['summary']; ?></p>
                         <?php
                         if ($nextLesson['ID'] != 0) {
-                        ?>
-                        <a href="lesson?id=<?= $nextLesson['ID']; ?>" class="btn btn-primary">Commencer</a>
-                        <?php
+                            ?>
+                            <a href="lesson?id=<?= $nextLesson['ID']; ?>" class="btn btn-primary">Commencer</a>
+                            <?php
                         }
                         ?>
                     </div>

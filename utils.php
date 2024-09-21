@@ -111,4 +111,14 @@ class Utils
             'token' => $token
         ));
     }
+
+    public function getAnnouncement(): array
+    {
+        include 'config.php';
+        $req = $db->prepare('SELECT value, state FROM settings WHERE name = "announcement_lms"');
+        $req->execute();
+        $result = $req->fetch();
+        $result['value'] = json_decode($result['value']);
+        return $result;
+    }
 }
