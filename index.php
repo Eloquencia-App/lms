@@ -89,12 +89,12 @@ $nextLesson = $utils->getNextLesson($_COOKIE['token']);
         <?php
         $announcement = $utils->getAnnouncement();
         if ($announcement['state'] == 1) {
-            ?>
+        ?>
             <div class="alert alert-info" role="alert">
                 <h4 class="alert-heading"><?= $announcement['value']->title; ?></h4>
-                <p><?= $announcement['value']->content; ?></p>
+                <p><?= htmlspecialchars_decode($announcement['value']->content); ?></p>
             </div>
-            <?php
+        <?php
         }
         ?>
         <div class="row">
@@ -106,9 +106,9 @@ $nextLesson = $utils->getNextLesson($_COOKIE['token']);
                         <p class="card-text"><?= $nextLesson['summary']; ?></p>
                         <?php
                         if ($nextLesson['ID'] != 0) {
-                            ?>
-                            <a href="lesson?id=<?= $nextLesson['ID']; ?>" class="btn btn-primary">Commencer</a>
-                            <?php
+                        ?>
+                        <a href="lesson?id=<?= $nextLesson['ID']; ?>" class="btn btn-primary">Commencer</a>
+                        <?php
                         }
                         ?>
                     </div>
